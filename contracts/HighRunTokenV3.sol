@@ -10,7 +10,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpg
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20FlashMintUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract HighRunTokenV2 is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, ERC20PausableUpgradeable, OwnableUpgradeable, ERC20PermitUpgradeable, ERC20VotesUpgradeable, ERC20FlashMintUpgradeable {
+contract HighRunTokenV3 is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, ERC20PausableUpgradeable, OwnableUpgradeable, ERC20PermitUpgradeable, ERC20VotesUpgradeable, ERC20FlashMintUpgradeable {
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
@@ -35,11 +35,7 @@ contract HighRunTokenV2 is Initializable, ERC20Upgradeable, ERC20BurnableUpgrade
     }
 
     function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
-    }
-
-    function mintForOwner(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
+        _mint(to, amount * 10 ** 18);
     }
 
     // The following functions are overrides required by Solidity.
@@ -58,5 +54,13 @@ contract HighRunTokenV2 is Initializable, ERC20Upgradeable, ERC20BurnableUpgrade
         returns (uint256)
     {
         return super.nonces(owner);
+    }
+
+    function multiTransfer(address[] memory recipients, uint256[] memory amounts) public onlyOwner {
+        require(recipients.length == amounts.length, "Array length mismatch");
+
+        for (uint256 i = 0; i < recipients.length; i++) {
+            _transfer(_msgSender(), recipients[i], amounts[i]);
+        }
     }
 }
