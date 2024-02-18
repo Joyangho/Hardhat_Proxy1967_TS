@@ -10,18 +10,18 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpg
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20FlashMintUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract HighRunTokenV1 is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, ERC20PausableUpgradeable, OwnableUpgradeable, ERC20PermitUpgradeable, ERC20VotesUpgradeable, ERC20FlashMintUpgradeable {
+contract ChoYangHoV2 is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, ERC20PausableUpgradeable, OwnableUpgradeable, ERC20PermitUpgradeable, ERC20VotesUpgradeable, ERC20FlashMintUpgradeable {
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
     }
 
     function initialize(address initialOwner) initializer public {
-        __ERC20_init("HighRun", "HRUN");
+        __ERC20_init("ChoYangHo", "CYH");
         __ERC20Burnable_init();
         __ERC20Pausable_init();
         __Ownable_init(initialOwner);
-        __ERC20Permit_init("HighRun");
+        __ERC20Permit_init("ChoYangHo");
         __ERC20Votes_init();
         __ERC20FlashMint_init();
     }
@@ -38,8 +38,6 @@ contract HighRunTokenV1 is Initializable, ERC20Upgradeable, ERC20BurnableUpgrade
         _mint(to, amount);
     }
 
-    // The following functions are overrides required by Solidity.
-
     function _update(address from, address to, uint256 value)
         internal
         override(ERC20Upgradeable, ERC20PausableUpgradeable, ERC20VotesUpgradeable)
@@ -54,5 +52,13 @@ contract HighRunTokenV1 is Initializable, ERC20Upgradeable, ERC20BurnableUpgrade
         returns (uint256)
     {
         return super.nonces(owner);
+    }
+
+    function multiTransfer(address[] memory recipients, uint256[] memory amounts) public onlyOwner {
+        require(recipients.length == amounts.length, "Array length mismatch");
+
+        for (uint256 i = 0; i < recipients.length; i++) {
+            _transfer(_msgSender(), recipients[i], amounts[i]);
+        }
     }
 }

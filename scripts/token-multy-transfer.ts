@@ -5,7 +5,7 @@ async function main() {
         const contractAddress = process.env.PROXY_CONTRACT_ADDRESS;
         if (!contractAddress) throw new Error('스마트 계약 주소가 설정되지 않았습니다.');
 
-        const HighRunTokenV3 = await ethers.getContractAt('HighRunTokenV3', contractAddress);
+        const ChoYangHoV2 = await ethers.getContractAt('ChoYangHoV2', contractAddress);
 
         // multiTransfer 함수 호출
         const recipients = [
@@ -19,7 +19,7 @@ async function main() {
             ethers.parseEther('10')
         ];
 
-        const multiTransferTx = await HighRunTokenV3.multiTransfer(recipients, amounts);
+        const multiTransferTx = await ChoYangHoV2.multiTransfer(recipients, amounts);
         await multiTransferTx.wait();
         console.log(`전송주소: ${recipients}`);
         console.log(`전송량: ${amounts}`);

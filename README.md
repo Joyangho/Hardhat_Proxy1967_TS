@@ -27,12 +27,14 @@
 ------
 
 # contracts
-- HighRunTokenV1.sol = V1
+- ChoYangHoV1.sol = V1
 
-- HighRunTokenV2.sol = V2
+- ChoYangHoV2.sol = V2
 
-- HighRunTokenV3.sol = V3
+- ChoYangHoV3.sol = V3
 ------
 
 # 프록시 계약 주소
-- 0xb86E94ec8C71820F3881aC56EBB081bcf5344481
+- 프록시: 0x091efB6afe8E9e54d182Ff912F2aEddF55430556
+- 구현: 0xfA356B0d3d6A41a94B013F2E0F2A46c10B468371
+- 어드민: 0x07352d8ADdfa6507D7A9715676C82151ba354038
